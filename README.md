@@ -3,8 +3,8 @@
 "paper.c"
 Entropy calculation by paper algorithm.
 
-"rand_nomask.c"
-"pcg_nomask.c" 
+"rand_nomask.c"\
+"pcg_nomask.c" \
 Table generator for "sourcedemo.c", creat table size from 2^14 ~ 2^20.
 
 "random_produce.c"
