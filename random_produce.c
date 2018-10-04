@@ -1,6 +1,6 @@
 #include "random_produce.h"
 
-//y[] is yi=yi+Rj(it)xdt
+//y[] is a 1x20 float number array; yi=yi+Rj(it)xdt
 //normalize is DO normalize or NOT
 //Y is packet count
 
