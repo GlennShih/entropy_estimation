@@ -13,6 +13,8 @@ double H_function(double y[], char normalize, int Y)
       s += exp(y[i]);
     } 
     s = -log10(0.05*s);
-    if(normalize) s /= log10(Y);
+    if(normalize){
+        s /= log10(Y);
+    }
     return s;
 }
