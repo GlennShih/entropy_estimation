@@ -14,6 +14,7 @@ double H_function(double y[], char normalize, int Y)
     
     if(normalize){
     	s /= log(Y);
+    	//printf("normalize\n");
     }
     
     return s;

@@ -23,33 +23,6 @@ static inline void print_mac(uint8_t *mac) {
 
 }
 
-/* Given a sockaddr containing an IP address, prints the IP address to stdout
- * using the common string representation for that address type */
-static inline void print_ip(struct sockaddr *ip) {
-
-	char str[20];
-	
-	/* Check the sockaddr family so we can cast it to the appropriate
-	 * address type, IPv4 or IPv6 */
-	if (ip->sa_family == AF_INET) {
-		/* IPv4 - cast the generic sockaddr to a sockaddr_in */
-		struct sockaddr_in *v4 = (struct sockaddr_in *)ip;
-		/* Use inet_ntop to convert the address into a string using
-		 * dotted decimal notation */
-		printf("%s\t", inet_ntop(AF_INET, &(v4->sin_addr), str, 20));
-	}
-
-	if (ip->sa_family == AF_INET6) {
-		/* IPv6 - cast the generic sockaddr to a sockaddr_in6 */
-		struct sockaddr_in6 *v6 = (struct sockaddr_in6 *)ip;
-		/* Use inet_ntop to convert the address into a string using
-		 * IPv6 address notation */
-		printf("%s ", inet_ntop(AF_INET6, &(v6->sin6_addr), str, 20));
-	}
-
-
-}
-
 uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 {
 	struct in_addr source_ip_addr;
@@ -60,41 +33,6 @@ uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 	}
 
 	return ntohl(source_ip_addr.s_addr);
-}
-
-static void per_packet(libtrace_packet_t *packet)
-{
-	
-	struct sockaddr_storage addr;
-	struct sockaddr *addr_ptr;
-	uint16_t port;
-	uint8_t *mac;
-	
-	/*
-	mac = trace_get_source_mac(packet);
-	if (mac == NULL) 
-		printf("NULL ");
-	else
-		print_mac(mac);
-	*/
-
-	addr_ptr = trace_get_source_address(packet, (struct sockaddr *)&addr);
-	if (addr_ptr == NULL)
-		printf("NULL ");
-	else
-		print_ip(addr_ptr);
-	
-	uint32_t int_ip;
-	int_ip = get_ip_int(addr_ptr);
-	
-
-	/*
-	port = trace_get_source_port(packet);
-	if (port == 0)
-		printf("NULL\n");
-	else
-		printf("%u\n", port);
-	*/
 }
 
 static void libtrace_cleanup(libtrace_t *trace, libtrace_packet_t *packet) {
@@ -173,7 +111,6 @@ int main(int argc, char **argv)
 
         while (trace_read_packet(trace,packet)>0) {
 
-                //per_packet(packet);
 		struct sockaddr_storage addr;
 		struct sockaddr *addr_ptr;
 		addr_ptr = trace_get_source_address(packet, (struct sockaddr *)&addr);
@@ -181,7 +118,6 @@ int main(int argc, char **argv)
 			printf("NULL ");
 		else {
 			Y++;
-			//print_ip(addr_ptr);
 			int_ip = get_ip_int(addr_ptr);
 			for(i=0;i<20;i++)
 			{
