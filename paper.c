@@ -16,10 +16,15 @@
  * effective. Libtrace will have provided us a pointer to the start of the
  * MAC address within the packet, so we can just use array indices to grab
  * each byte of the MAC address in turn */
+
+/* Algorithm 1 in paper, simulate the maximally skewed stable distribution
+ * F(x;1,-1,pi/2,0)
+ */
 double ran_produce()
 {
-    int i1,i2;
+//    int i1,i2;
     double u1, u2, w1, w2, ran, ran1, ran2;
+/*
     int i;
 
     while(1)
@@ -27,7 +32,7 @@ double ran_produce()
         i1=rand();
         if(i1>0 && i1<RAND_MAX)
         {
-            u1=(double)i1/RAND_MAX;
+            u1=(double)i1/(double)RAND_MAX;
             break;
         }
     }
@@ -36,15 +41,18 @@ double ran_produce()
         i2=rand();
         if(i2>0 && i2<RAND_MAX) 
         {
-            u2=(double)i2/RAND_MAX;
+            u2=(double)i2/(double)RAND_MAX;
             break;
         }
     }
+*/
+    u1 = (double)rand() / (double)RAND_MAX;
+    u2 = (double)rand() / (double)RAND_MAX;
     w1 = M_PI*(u1-0.5);
-    w2 = -log10(u2);
+    w2 = -log(u2);
 
     ran1 = (tan(w1)*(M_PI_2 - w1));
-    ran2 = log10( w2*cos(w1) / (M_PI_2-w1) );
+    ran2 = log( w2*cos(w1) / (M_PI_2-w1) );
     ran = ran1 + ran2;
 
     return ran;
@@ -94,41 +102,6 @@ uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 	}
 
 	return ntohl(source_ip_addr.s_addr);
-}
-
-static void per_packet(libtrace_packet_t *packet)
-{
-	
-	struct sockaddr_storage addr;
-	struct sockaddr *addr_ptr;
-	uint16_t port;
-	uint8_t *mac;
-	
-	/*
-	mac = trace_get_source_mac(packet);
-	if (mac == NULL) 
-		printf("NULL ");
-	else
-		print_mac(mac);
-	*/
-
-	addr_ptr = trace_get_source_address(packet, (struct sockaddr *)&addr);
-	if (addr_ptr == NULL)
-		printf("NULL ");
-	else
-		print_ip(addr_ptr);
-	
-	uint32_t int_ip;
-	int_ip = get_ip_int(addr_ptr);
-	
-
-	/*
-	port = trace_get_source_port(packet);
-	if (port == 0)
-		printf("NULL\n");
-	else
-		printf("%u\n", port);
-	*/
 }
 
 static void libtrace_cleanup(libtrace_t *trace, libtrace_packet_t *packet) {
@@ -181,37 +154,41 @@ int main(int argc, char **argv)
 
 
 
-	
 	uint32_t i,Y=0;
-	double z[20]={0}, tmp2;
-	uint32_t int_ip,tmp;
+	double z[20]={0.0};
+	uint32_t uint32_ip;
 	long m = atol(argv[2]);
-
+	
 	
 
         while (trace_read_packet(trace,packet)>0) {
 
-                //per_packet(packet);
 		struct sockaddr_storage addr;
 		struct sockaddr *addr_ptr;
 		addr_ptr = trace_get_source_address(packet, (struct sockaddr *)&addr);
 		if (addr_ptr == NULL)
 			printf("NULL ");
 		else {
+			// Update packet counter
 			Y++;
-			//print_ip(addr_ptr);
-			int_ip = get_ip_int(addr_ptr);
-			srand(int_ip);
+			uint32_ip = get_ip_int(addr_ptr);
+			//Seed the PRNG with it
+			srand(uint32_ip);
 			
 			for(i=0;i<20;i++)
 			{
 				z[i]+=ran_produce();
 			}
-			if(Y%m==0)
+			//observe inteval ended. Packet counter == Trace packet count
+			if(Y==m)
 			{
-				for(i=0;i<20;i++) z[i]/=m;
-				printf("%lf\n",H_function(z,1,m));
-				for(i=0;i<20;i++) z[i]=0;
+				for(i=0;i<20;i++){
+					z[i] /= m;
+				}
+				printf("Entropy = %lf\n",H_function(z,1,m));
+				for(i=0;i<20;i++){
+					z[i] = 0.0;
+				}
 				break;
 			}
 		}
@@ -225,6 +202,6 @@ int main(int argc, char **argv)
         }
 
         libtrace_cleanup(trace, packet);
-	printf("Y=%d\n",Y);
+	printf("Packet Count = %d\n",Y);
         return 0;
 }
