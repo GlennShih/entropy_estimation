@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 
 	
 	uint32_t i,Y=0;
-	double z[20]={0}, lookup_table[524288], tmp2;
+	double z[20]={0.0}, lookup_table[524288], tmp2;
 	uint32_t int_ip,tmp;
 	long m = atol(argv[2]);
 	int size;// = atol(argv[4]);
@@ -121,6 +121,11 @@ int main(int argc, char **argv)
 			int_ip = get_ip_int(addr_ptr);
 			for(i=0;i<20;i++)
 			{
+				/*
+				 *	XOR Random number generator
+				 *	shift first then do XOR
+				 *	here will have 2^32-1 for 32-bit words
+				*/
 				tmp = int_ip^(int_ip << mag3[i][0]);
 				tmp ^= (tmp >> mag3[i][1]);
 				tmp ^= (tmp << mag3[i][2]);
@@ -135,11 +140,11 @@ int main(int argc, char **argv)
 				tmp2 = lookup_table[tmp];
 				z[i]+=tmp2;
 			}
-			if(Y%m==0)
+			if(Y==m)
 			{
 				for(i=0;i<20;i++) z[i]/=m;
 				printf("%lf\n",H_function(z,1,m));
-				for(i=0;i<20;i++) z[i]=0;
+				for(i=0;i<20;i++) z[i]=0.0;
 				break;
 			}
 		}
