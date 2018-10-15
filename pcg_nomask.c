@@ -73,10 +73,10 @@ double ran_produce()
     }
 
     w1 = M_PI*(u1-0.5);
-    w2 = -log10(u2);
+    w2 = -log(u2);
 
     ran1 = (tan(w1)*(M_PI_2 - w1));
-    ran2 = log10( w2*cos(w1) / (M_PI_2-w1) );
+    ran2 = log( w2*cos(w1) / (M_PI_2-w1) );
     ran = ran1 + ran2;
 
     return ran;

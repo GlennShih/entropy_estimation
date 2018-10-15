@@ -1,0 +1,147 @@
+##SRAND
+#seed1
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed1/array_loge_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/seed1/array_loge_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed1/array_loge_19.txt
+
+
+#seed2
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed2/array_loge_seed2_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed2/array_loge_seed2_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed2/array_loge_seed2_19.txt
+
+
+#seed524287
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/seed524287/array_loge_seed524287_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/seed524287/array_loge_seed524287_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/seed524287/array_loge_seed524287_19.txt
+
+
+
+
+##PCG
+
+#seed1
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed1/array_loge_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395  ../array_txt_file/pcg/seed1/array_loge_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed1/array_loge_19.txt
+
+
+#seed2
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed2/array_loge_seed2_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed2/array_loge_seed2_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed2/array_loge_seed2_19.txt
+
+
+#seed524287
+
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/small.pcap 6948502 ../array_txt_file/pcg/seed524287/array_loge_seed524287_19.txt
+
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/middle.pcap 16531395 ../array_txt_file/pcg/seed524287/array_loge_seed524287_19.txt
+
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_14.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_15.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_16.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_17.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_18.txt
+./sourcedemo ../../trace/big.pcap 17486529 ../array_txt_file/pcg/seed524287/array_loge_seed524287_19.txt
