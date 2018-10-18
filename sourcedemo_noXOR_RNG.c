@@ -109,39 +109,30 @@ int main(int argc, char **argv)
 		else {
 			Y++;
 			int_ip = get_ip_int(addr_ptr);
+			//printf("%u\n",int_ip);
+			srand(int_ip);
 			for(i=0;i<20;i++)
 			{
-				/*
-				 *	XOR Random number generator
-				 *	shift first then do XOR
-				 *	here will have 2^32-1 for 32-bit words
-				*/
-				tmp = int_ip^(int_ip << mag3[i][0]);
-				tmp ^= (tmp >> mag3[i][1]);
-				tmp ^= (tmp << mag3[i][2]);
-				
-				if(size==14) tmp &= 0x00003fff;
-				else if(size==15) tmp &= 0x00007fff;
-				else if(size==16) tmp &= 0x0000ffff;
-				else if(size==17) tmp &= 0x0001ffff;
-				else if(size==18) tmp &= 0x0003ffff;
-				else if(size==19) tmp &= 0x0007ffff;
+				if(size==14) tmp = rand()%16384;
+				else if(size==15) tmp = rand()%32768;
+				else if(size==16) tmp = rand()%65536;
+				else if(size==17) tmp = rand()%131072;
+				else if(size==18) tmp = rand()%262144;
+				else if(size==19) tmp = rand()%524288;
 				//else if(size==20) tmp &= 0x000fffff;
 				tmp2 = lookup_table[tmp];
-				//printf("when i=%u tmp2=%lf\n",i,tmp2);
 				z[i]+=tmp2;
 			}
 			if(Y==m)
 			{
-				for(i=0;i<20;i++){
-					z[i]/=m;
-					//printf("z[i]=%lf\n",z[i]/=m);
-				} 
+				for(i=0;i<20;i++) z[i]/=m;
 				printf("%lf\n",H_function(z,1,m));
 				for(i=0;i<20;i++) z[i]=0.0;
 				break;
 			}
-		}		
+		}
+		
+		
         }
 
 
