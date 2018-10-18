@@ -12,19 +12,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "random_produce.h"
-/* This is not the nicest way to print a 6 byte MAC address, but it is 
- * effective. Libtrace will have provided us a pointer to the start of the
- * MAC address within the packet, so we can just use array indices to grab
- * each byte of the MAC address in turn */
+#define K_VALUE 20
 
 /* Algorithm 1 in paper, simulate the maximally skewed stable distribution
  * F(x;1,-1,pi/2,0)
  */
 double ran_produce()
 {
-//    int i1,i2;
+    long i1,i2;
     double u1, u2, w1, w2, ran, ran1, ran2;
-/*
+
     int i;
 
     while(1)
@@ -45,9 +42,9 @@ double ran_produce()
             break;
         }
     }
-*/
-    u1 = (double)rand() / (double)RAND_MAX;
-    u2 = (double)rand() / (double)RAND_MAX;
+
+    //u1 = (double)rand() / (double)RAND_MAX;
+    //u2 = (double)rand() / (double)RAND_MAX;
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 
@@ -56,40 +53,6 @@ double ran_produce()
     ran = ran1 + ran2;
 
     return ran;
-}
-
-static inline void print_mac(uint8_t *mac) {
-
-	printf("%02x:%02x:%02x:%02x:%02x:%02x ", mac[0], mac[1], mac[2], mac[3],
-		mac[4], mac[5]);
-
-}
-
-/* Given a sockaddr containing an IP address, prints the IP address to stdout
- * using the common string representation for that address type */
-static inline void print_ip(struct sockaddr *ip) {
-
-	char str[20];
-	
-	/* Check the sockaddr family so we can cast it to the appropriate
-	 * address type, IPv4 or IPv6 */
-	if (ip->sa_family == AF_INET) {
-		/* IPv4 - cast the generic sockaddr to a sockaddr_in */
-		struct sockaddr_in *v4 = (struct sockaddr_in *)ip;
-		/* Use inet_ntop to convert the address into a string using
-		 * dotted decimal notation */
-		printf("%s\t", inet_ntop(AF_INET, &(v4->sin_addr), str, 20));
-	}
-
-	if (ip->sa_family == AF_INET6) {
-		/* IPv6 - cast the generic sockaddr to a sockaddr_in6 */
-		struct sockaddr_in6 *v6 = (struct sockaddr_in6 *)ip;
-		/* Use inet_ntop to convert the address into a string using
-		 * IPv6 address notation */
-		printf("%s ", inet_ntop(AF_INET6, &(v6->sin6_addr), str, 20));
-	}
-
-
 }
 
 uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
@@ -155,7 +118,7 @@ int main(int argc, char **argv)
 
 
 	uint32_t i,Y=0;
-	double z[20]={0.0};
+	double z[K_VALUE]={0.0};
 	uint32_t uint32_ip;
 	long m = atol(argv[2]);
 	
@@ -175,18 +138,18 @@ int main(int argc, char **argv)
 			//Seed the PRNG with it
 			srand(uint32_ip);
 			
-			for(i=0;i<20;i++)
+			for(i=0;i<K_VALUE;i++)
 			{
 				z[i]+=ran_produce();
 			}
 			//observe inteval ended. Packet counter == Trace packet count
 			if(Y==m)
 			{
-				for(i=0;i<20;i++){
+				for(i=0;i<K_VALUE;i++){
 					z[i] /= m;
 				}
 				printf("Entropy = %lf\n",H_function(z,1,m));
-				for(i=0;i<20;i++){
+				for(i=0;i<K_VALUE;i++){
 					z[i] = 0.0;
 				}
 				break;

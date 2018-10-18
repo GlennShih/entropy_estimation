@@ -46,7 +46,7 @@ double ran_produce()
     double u1, u2, w1, w2, ran, ran1, ran2;
     int i;
 
-/*
+
     while(1)
     {
         i1=rand();
@@ -65,9 +65,9 @@ double ran_produce()
             break;
         }
     }
-*/    
-    u1 = (double)rand() / (double)RAND_MAX;
-    u2 = (double)rand() / (double)RAND_MAX;
+    
+    //u1 = (double)rand() / (double)RAND_MAX;
+    //u2 = (double)rand() / (double)RAND_MAX;
     
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);

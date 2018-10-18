@@ -12,6 +12,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "random_produce.h"
+#define K_VALUE 20
 
 uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 {
@@ -73,16 +74,8 @@ int main(int argc, char **argv)
                 return 1;
         }
 
-	int mag3[20][3] = {
-        {1, 3,10}, {1,11, 6}, {2, 5,15}, {2, 7, 7}, {2, 7, 9},
-        {2, 9,15}, {3, 1,14}, {3,13, 7}, {4, 5,15}, {5, 9, 7},
-        {5,13, 6}, {6, 1,11}, {7, 1, 9}, {9, 5, 1}, {11,7,12},
-        {14,1,15}, {14,13,15}, {1,5,16},{1,11,16},{11,7,16}
-  	};
-
-	
 	uint32_t i=0,Y=0;
-	double z[20]={0.0}, lookup_table[524288], tmp2=0.0;
+	double z[K_VALUE]={0.0}, lookup_table[524288], tmp2=0.0;
 	uint32_t int_ip,tmp;
 	long m = atol(argv[2]);
 	int size;// = atol(argv[4]);
@@ -97,7 +90,6 @@ int main(int argc, char **argv)
 	else if(i==131072) size = 17;
 	else if(i==262144) size = 18;
 	else if(i==524288) size = 19;
-	//else if(i==1048576) size = 20;
 
         while (trace_read_packet(trace,packet)>0) {
 
@@ -111,7 +103,7 @@ int main(int argc, char **argv)
 			int_ip = get_ip_int(addr_ptr);
 			//printf("%u\n",int_ip);
 			srand(int_ip);
-			for(i=0;i<20;i++)
+			for(i=0;i<K_VALUE;i++)
 			{
 				if(size==14) tmp = rand()%16384;
 				else if(size==15) tmp = rand()%32768;
@@ -119,15 +111,15 @@ int main(int argc, char **argv)
 				else if(size==17) tmp = rand()%131072;
 				else if(size==18) tmp = rand()%262144;
 				else if(size==19) tmp = rand()%524288;
-				//else if(size==20) tmp &= 0x000fffff;
+				//else if(size==K_VALUE) tmp &= 0x000fffff;
 				tmp2 = lookup_table[tmp];
 				z[i]+=tmp2;
 			}
 			if(Y==m)
 			{
-				for(i=0;i<20;i++) z[i]/=m;
+				for(i=0;i<K_VALUE;i++) z[i]/=m;
 				printf("%lf\n",H_function(z,1,m));
-				for(i=0;i<20;i++) z[i]=0.0;
+				for(i=0;i<K_VALUE;i++) z[i]=0.0;
 				break;
 			}
 		}
