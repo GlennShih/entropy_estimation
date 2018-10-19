@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
 
 double ran_produce()
 {
-    int i1,i2;
+    //int i1,i2;
+    long i1, i2;
     double u1, u2, w1, w2, ran, ran1, ran2;
     int i;
 
@@ -50,18 +51,20 @@ double ran_produce()
     while(1)
     {
         i1=rand();
+        //printf("i1=%d\n", i1);
         if(i1>0 && i1<RAND_MAX)
         {
-            u1=(double)i1/RAND_MAX;
+            u1=(double)i1/(double)RAND_MAX;
             break;
         }
     }
     while(1)
     {
         i2=rand();
+        //printf("i2=%d\n", i2);
         if(i2>0 && i2<RAND_MAX) 
         {
-            u2=(double)i2/RAND_MAX;
+            u2=(double)i2/(double)RAND_MAX;
             break;
         }
     }
