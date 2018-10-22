@@ -5,7 +5,7 @@
 #include <inttypes.h>
 #include <string.h>
 
-double ran_produce();
+long double ran_produce();
 
 int main(int argc, char *argv[])
 {
@@ -31,47 +31,44 @@ int main(int argc, char *argv[])
     file_out = fopen(output_name, "wb");
     srand(seed);
     int i;
-    double array;
+    long double array;
     for(i=0; i<16384*size; i++)
     {
         array = ran_produce();
-        fprintf(file_out, "%lf\n", array);
+        fprintf(file_out, "%Lf\n", array);
     }
     fclose(file_out);
 }
 
-double ran_produce()
+long double ran_produce()
 {
     //int i1,i2;
-    long i1, i2;
-    double u1, u2, w1, w2, ran, ran1, ran2;
-    int i;
-
+    unsigned long long int i1, i2;
+    long double u1, u2, w1, w2, ran, ran1, ran2;
 
     while(1)
     {
         i1=rand();
-        //printf("i1=%d\n", i1);
+        printf("i1=%llu\n",i1);
         if(i1>0 && i1<RAND_MAX)
         {
-            u1=(double)i1/(double)RAND_MAX;
+            u1=(unsigned long long int)i1/RAND_MAX;
             break;
         }
     }
     while(1)
     {
         i2=rand();
-        //printf("i2=%d\n", i2);
+        printf("i2=%llu\n",i2);
         if(i2>0 && i2<RAND_MAX) 
         {
-            u2=(double)i2/(double)RAND_MAX;
+            u2=(unsigned long long int)i2/RAND_MAX;
             break;
         }
     }
     
     //u1 = (double)rand() / (double)RAND_MAX;
     //u2 = (double)rand() / (double)RAND_MAX;
-    
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 
