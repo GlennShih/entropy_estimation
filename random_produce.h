@@ -6,5 +6,5 @@
 #include <time.h>
 #include <math.h>
 
-double H_function(double y[], char normalize, int Y);
+long double H_function(long double y[], char normalize, int Y);
 #endif

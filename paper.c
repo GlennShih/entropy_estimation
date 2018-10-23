@@ -17,19 +17,17 @@
 /* Algorithm 1 in paper, simulate the maximally skewed stable distribution
  * F(x;1,-1,pi/2,0)
  */
-double ran_produce()
+long double ran_produce()
 {
-    long i1,i2;
-    double u1, u2, w1, w2, ran, ran1, ran2;
-
-    int i;
+    long long i1,i2;
+    long double u1, u2, w1, w2, ran, ran1, ran2;
 
     while(1)
     {
         i1=rand();
         if(i1>0 && i1<RAND_MAX)
         {
-            u1=(double)i1/(double)RAND_MAX;
+            u1=(long double)i1/RAND_MAX;
             break;
         }
     }
@@ -38,7 +36,7 @@ double ran_produce()
         i2=rand();
         if(i2>0 && i2<RAND_MAX) 
         {
-            u2=(double)i2/(double)RAND_MAX;
+            u2=(long double)i2/RAND_MAX;
             break;
         }
     }
@@ -48,7 +46,7 @@ double ran_produce()
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 
-    ran1 = (tan(w1)*(M_PI_2 - w1));
+    ran1 = tan(w1) * (M_PI_2 - w1);
     ran2 = log( w2*cos(w1) / (M_PI_2-w1) );
     ran = ran1 + ran2;
 
@@ -118,7 +116,7 @@ int main(int argc, char **argv)
 
 
 	uint32_t i,Y=0;
-	double z[K_VALUE]={0.0};
+	long double z[K_VALUE]={0.0};
 	uint32_t uint32_ip;
 	long m = atol(argv[2]);
 	
@@ -148,7 +146,7 @@ int main(int argc, char **argv)
 				for(i=0;i<K_VALUE;i++){
 					z[i] /= m;
 				}
-				printf("Entropy = %lf\n",H_function(z,1,m));
+				printf("Entropy = %Lf\n",H_function(z,1,m));
 				for(i=0;i<K_VALUE;i++){
 					z[i] = 0.0;
 				}
