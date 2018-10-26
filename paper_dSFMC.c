@@ -15,6 +15,143 @@
 #include "dSFMT.h"
 #define K_VALUE 20
 
+/*
+ *   Random number generator by Mersenne twister
+ *   from dSFMT-src-2.2.3 howto-compile.html sample3.c
+ *   return a double float random number between (0,1)
+ */
+ double dsfmt_rand(uint32_t seed){
+    int seed_cnt;
+    double x;
+    uint32_t seeds[100];
+    dsfmt_t dsfmt;
+
+    seeds[0] = seed;
+    //printf("seed=%u\n",seed);
+    seed_cnt = 1;
+    dsfmt_init_by_array(&dsfmt, seeds, seed_cnt);
+    x = dsfmt_genrand_open_open(&dsfmt);
+    
+    return x;
+ } 
+
+/*
+ *   Random number generator by Mersenne twister
+ *   from dSFMT-src-2.2.3 howto-compile.html sample2.c
+ *   return a double float random number between (0,1)
+ */
+double dsfmt_rand_sample2_x(uint32_t seed){
+    int i;
+    double x, y;
+    const int NUM = 1;
+    const int R_SIZE = 2 * NUM;
+    int size;
+    double *array;
+    dsfmt_t dsfmt;
+
+    size = dsfmt_get_min_array_size();
+    if (size < R_SIZE) {
+	   size = R_SIZE;
+    }
+
+#if defined(__APPLE__) || \
+    (defined(__FreeBSD__) && __FreeBSD__ >= 3 && __FreeBSD__ <= 6)
+    printf("malloc used\n");
+    array = malloc(sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#elif defined(_POSIX_C_SOURCE)
+    //printf("posix_memalign used\n");
+    if (posix_memalign((void **)&array, 16, sizeof(double) * size) != 0) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#elif defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+    //printf("memalign used\n");
+    array = memalign(16, sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#else /* in this case, gcc doesn't suppport SSE2 */
+    array = malloc(sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#endif
+
+    dsfmt_init_gen_rand(&dsfmt, seed);
+    dsfmt_fill_array_open_open(&dsfmt, array, size);
+
+    x = array[0];
+
+    free(array);
+
+    return x;
+}
+
+
+/*
+ *   Random number generator by Mersenne twister
+ *   from dSFMT-src-2.2.3 howto-compile.html sample2.c
+ *   return a double float random number between (0,1)
+ */
+double dsfmt_rand_sample2_y(uint32_t seed){
+    int i;
+    double x, y;
+    const int NUM = 1;
+    const int R_SIZE = 2 * NUM;
+    int size;
+    double *array;
+    dsfmt_t dsfmt;
+
+    size = dsfmt_get_min_array_size();
+    if (size < R_SIZE) {
+	   size = R_SIZE;
+    }
+
+#if defined(__APPLE__) || \
+    (defined(__FreeBSD__) && __FreeBSD__ >= 3 && __FreeBSD__ <= 6)
+    printf("malloc used\n");
+    array = malloc(sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#elif defined(_POSIX_C_SOURCE)
+    //printf("posix_memalign used\n");
+    if (posix_memalign((void **)&array, 16, sizeof(double) * size) != 0) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#elif defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+    //printf("memalign used\n");
+    array = memalign(16, sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#else /* in this case, gcc doesn't suppport SSE2 */
+    array = malloc(sizeof(double) * size);
+    if (array == NULL) {
+	printf("can't allocate memory.\n");
+	return 1;
+    }
+#endif
+
+    dsfmt_init_gen_rand(&dsfmt, seed);
+    dsfmt_fill_array_open_open(&dsfmt, array, size);
+
+    y = array[1];
+
+    free(array);
+
+    return y;
+}
+
 /* Algorithm 1 in paper, simulate the maximally skewed stable distribution
  * F(x;1,-1,pi/2,0)
  */
@@ -22,31 +159,11 @@ long double ran_produce(uint32_t seed)
 {
     long long i1,i2;
     long double u1, u2, w1, w2, ran, ran1, ran2;
-	dsfmt_t dsfmt;
 
-    while(1)
-    {
-        //i1=rand();
-
-        if(i1>0 && i1<RAND_MAX)
-        {
-            u1=(long double)i1/RAND_MAX;
-            break;
-        }
-    }
-    while(1) 
-    {
-        //i2=rand();
-
-        if(i2>0 && i2<RAND_MAX) 
-        {
-            u2=(long double)i2/RAND_MAX;
-            break;
-        }
-    }
-
-    //u1 = (double)rand() / (double)RAND_MAX;
-    //u2 = (double)rand() / (double)RAND_MAX;
+    u1=dsfmt_rand_sample2_x(seed);
+    u2=dsfmt_rand_sample2_y(seed);
+    printf("u1=%Lf\n",u1);
+    printf("u2=%Lf\n",u2);
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 

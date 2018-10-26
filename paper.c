@@ -41,8 +41,6 @@ long double ran_produce()
         }
     }
 
-    //u1 = (double)rand() / (double)RAND_MAX;
-    //u2 = (double)rand() / (double)RAND_MAX;
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 
