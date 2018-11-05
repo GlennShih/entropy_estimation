@@ -16,7 +16,7 @@
 #include "random_produce.h"
 #define K_VALUE 20
 #define HASH_TABLE_SIZE 100
-#define timeinterval 10
+//#define timeinterval 10
 
 uint64_t intervalcount = 0;
 uint64_t TotalPacketCount = 0;
@@ -166,7 +166,7 @@ uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 *  Start point of timedemo part, counted by 10 second
 *
 */
-static void per_packet(libtrace_packet_t *packet)
+static void per_packet(libtrace_packet_t *packet, int interval)
 {
 	struct sockaddr_storage addr;
 	struct sockaddr *addr_ptr;	
@@ -198,7 +198,7 @@ static void per_packet(libtrace_packet_t *packet)
 	 * trace so we need to determine the time at which the first report
 	 * must occur, i.e. 10 seconds from now. */
 	if (next_report == 0) {
-		next_report = ts.tv_sec + timeinterval;
+		next_report = ts.tv_sec + interval;
 		packet_usec = ts.tv_usec;
         /*  for counting time in u seconds  */
         //next_report = ts.tv_usec + 10;
@@ -249,7 +249,7 @@ static void per_packet(libtrace_packet_t *packet)
 			z[i] = 0.0;
 		}        
 		/* Determine when the next report is due */
-		next_report += timeinterval;
+		next_report += interval;
 	}
 
 	/* No matter what else happens during this function call, we still
@@ -281,6 +281,7 @@ int main(int argc, char *argv[])
 	
 	libtrace_t *trace = NULL;
 	libtrace_packet_t *packet = NULL;
+	int interval=0;
 	
 	/* Ensure we have at least one argument after the program name */
         if (argc < 3) {
@@ -297,7 +298,10 @@ int main(int argc, char *argv[])
 	}
 
 	trace = trace_create(argv[1]);
-
+	
+	interval = atol(argv[2]);
+    printf("time interval = %d seconds\n", interval);
+	
 	if (trace_is_err(trace)) {
 		trace_perror(trace,"Opening trace file");
 		libtrace_cleanup(trace, packet);
@@ -315,7 +319,7 @@ int main(int argc, char *argv[])
 
 
 	while (trace_read_packet(trace,packet)>0) {
-		per_packet(packet);
+		per_packet(packet, interval);
 	}
 
 	print_linkedlist();

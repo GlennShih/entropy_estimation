@@ -13,106 +13,9 @@
 #include <arpa/inet.h>
 #include "random_produce.h"
 #include "libtrace.h"
+#include "dSFMT.h"
+
 #define K_VALUE 20
-
-// 定义MT19937-32的常数
-enum
-{
-    // 假定 W = 32 (此项省略)
-    N = 624,
-    M = 397,
-    R = 31,
-    A = 0x9908B0DF,
-
-    F = 1812433253,
-
-    U = 11,
-    // 假定 D = 0xFFFFFFFF (此项省略)
-
-    S = 7,
-    B = 0x9D2C5680,
-
-    T = 15,
-    C = 0xEFC60000,
-
-    L = 18,
-
-    MASK_LOWER = (1ull << R) - 1,
-    MASK_UPPER = (1ull << R)
-};
-
-static uint32_t  mt[N];
-static uint16_t  index;
-
-// 根据给定的seed初始化旋转链
-void Initialize(const uint32_t seed)
-{
-    uint32_t  i;
-    mt[0] = seed;
-    for ( i = 1; i < N; i++ )
-    {
-        mt[i] = (F * (mt[i - 1] ^ (mt[i - 1] >> 30)) + i);
-    }
-    index = N;
-}
-
-static void Twist()
-{
-    uint32_t  i, x, xA;
-    for ( i = 0; i < N; i++ )
-    {
-        x = (mt[i] & MASK_UPPER) + (mt[(i + 1) % N] & MASK_LOWER);
-        xA = x >> 1;
-        if ( x & 0x1 )
-        {
-            xA ^= A;
-        }
-        mt[i] = mt[(i + M) % N] ^ xA;
-    }
-
-    index = 0;
-}
-
-// 产生一个32位随机数
-uint32_t ExtractU32()
-{
-    uint32_t  y;
-    int       i = index;
-    if ( index >= N )
-    {
-        Twist();
-        i = index;
-    }
-    y = mt[i];
-    index = i + 1;
-    y ^= (y >> U);
-    y ^= (y << S) & B;
-    y ^= (y << T) & C;
-    y ^= (y >> L);
-    return y;
-}
-
-/* Algorithm 1 in paper, simulate the maximally skewed stable distribution
- * F(x;1,-1,pi/2,0)
- */
-long double ran_produce()
-{
-    long long i1,i2;
-    long double u1, u2, w1, w2, ran, ran1, ran2;
-
-    u1=(long double)ExtractU32()/4294967295;
-    u2=(long double)ExtractU32()/4294967295;
-    //printf("u1=%Lf\n",u1);
-    //printf("u2=%Lf\n",u2);
-    w1 = M_PI*(u1-0.5);
-    w2 = -log(u2);
-
-    ran1 = tan(w1) * (M_PI_2 - w1);
-    ran2 = log( w2*cos(w1) / (M_PI_2-w1) );
-    ran = ran1 + ran2;
-
-    return ran;
-}
 
 uint32_t get_ip_int(struct sockaddr *ip)//ip轉int
 {
@@ -179,6 +82,7 @@ int main(int argc, char **argv)
 	uint32_t i,Y=0;
 	long double z[K_VALUE]={0.0};
 	uint32_t uint32_ip;
+    dsfmt_t dsfmt;
 	long m = atol(argv[2]);
 
 	
@@ -196,10 +100,23 @@ int main(int argc, char **argv)
 			uint32_ip = get_ip_int(addr_ptr);
 			//Seed the PRNG with it
 			//srand(uint32_ip);
-            Initialize(uint32_ip);
+            dsfmt_init_gen_rand(&dsfmt, uint32_ip);
 			for(i=0;i<K_VALUE;i++)
 			{
- 				z[i]+=ran_produce();
+                long long i1,i2;
+                long double u1, u2, w1, w2, ran, ran1, ran2;
+
+                u1=dsfmt_genrand_open_open(&dsfmt);
+                u2=dsfmt_genrand_open_open(&dsfmt);
+                //printf("u1=%Lf\n",u1);
+                //printf("u2=%Lf\n",u2);
+                w1 = M_PI*(u1-0.5);
+                w2 = -log(u2);
+
+                ran1 = tan(w1) * (M_PI_2 - w1);
+                ran2 = log( w2*cos(w1) / (M_PI_2-w1) );
+                ran = ran1 + ran2;
+                z[i]+=ran;
 			}
 			//observe inteval ended. Packet counter == Trace packet count
 			if(Y==m)

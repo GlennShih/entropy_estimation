@@ -90,6 +90,7 @@ int main(int argc, char **argv)
 	else if(i==131072) size = 17;
 	else if(i==262144) size = 18;
 	else if(i==524288) size = 19;
+	else if(i==1048576) size= 20;
 
         while (trace_read_packet(trace,packet)>0) {
 
@@ -111,6 +112,7 @@ int main(int argc, char **argv)
 				else if(size==17) tmp = rand()%131072;
 				else if(size==18) tmp = rand()%262144;
 				else if(size==19) tmp = rand()%524288;
+				else if(size==20) tmp = rand()%1048576;
 				//else if(size==K_VALUE) tmp &= 0x000fffff;
 				tmp2 = lookup_table[tmp];
 				z[i]+=tmp2;

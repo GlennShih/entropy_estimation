@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
     int i, cnt, seed;
     double x, y, pi;
-    const int NUM = 10000;
+    const int NUM = 10;
     dsfmt_t dsfmt;
 
     if (argc >= 2) {
@@ -16,13 +16,10 @@ int main(int argc, char* argv[]) {
     cnt = 0;
     dsfmt_init_gen_rand(&dsfmt, seed);
     for (i = 0; i < NUM; i++) {
-	x = dsfmt_genrand_close_open(&dsfmt);
-	y = dsfmt_genrand_close_open(&dsfmt);
-	if (x * x + y * y < 1.0) {
-	    cnt++;
-	}
+	x = dsfmt_genrand_open_open(&dsfmt);
+	y = dsfmt_genrand_open_open(&dsfmt);
+    printf("x=%f\n",x);
     }
-    pi = (double)cnt / NUM * 4;
-    printf("%f\n", pi);
+
     return 0;
 }

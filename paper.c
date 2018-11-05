@@ -37,10 +37,11 @@ long double ran_produce()
         if(i2>0 && i2<RAND_MAX) 
         {
             u2=(long double)i2/RAND_MAX;
+            //printf("u1=%Lf\tu2=%Lf\n",u1,u2);
             break;
         }
     }
-
+    
     w1 = M_PI*(u1-0.5);
     w2 = -log(u2);
 

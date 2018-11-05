@@ -1,64 +1,91 @@
-#define N 624
-#define M 397
-#define A 0x9908b0dfUL
-#define U 0x80000000UL
-#define L 0x7fffffffUL
-#include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 
-static unsigned long x[N];
-static int next;
 
-void jsw_seed(unsigned long s)
+// 定义MT19937-32的常数
+enum
 {
-    int i;
+    // 假定 W = 32 (此项省略)
+    N = 624,
+    M = 397,
+    R = 31,
+    A = 0x9908B0DF,
 
-    x[0] = s & 0xffffffffUL;
+    F = 1812433253,
 
-    for (i = 1; i < N; i++) {
-        x[i] = (1812433253UL * (x[i - 1] ^ (x[i - 1] >> 30)) + i);
-        x[i] &= 0xffffffffUL;
+    U = 11,
+    // 假定 D = 0xFFFFFFFF (此项省略)
+
+    S = 7,
+    B = 0x9D2C5680,
+
+    T = 15,
+    C = 0xEFC60000,
+
+    L = 18,
+
+    MASK_LOWER = (1ull << R) - 1,
+    MASK_UPPER = (1ull << R)
+};
+
+static uint32_t  mt[N];
+static uint16_t  index;
+
+// 根据给定的seed初始化旋转链
+void Initialize(const uint32_t seed)
+{
+    uint32_t  i;
+    mt[0] = seed;
+    for ( i = 1; i < N; i++ )
+    {
+        mt[i] = (F * (mt[i - 1] ^ (mt[i - 1] >> 30)) + i);
     }
+    index = N;
 }
 
-unsigned long jsw_rand(void)
+static void Twist()
 {
-    unsigned long y, a;
-    int i;
-
-    /* Refill x if exhausted */
-    if (next == N) {
-        next = 0;
-
-        for (i = 0; i < N - 1; i++) {
-            y = (x[i] & U) | x[i + 1] & L;
-            a = (y & 0x1UL) ? A : 0x0UL;
-            x[i] = x[(i + M) % N] ^ (y >> 1) ^ a;
+    uint32_t  i, x, xA;
+    for ( i = 0; i < N; i++ )
+    {
+        x = (mt[i] & MASK_UPPER) + (mt[(i + 1) % N] & MASK_LOWER);
+        xA = x >> 1;
+        if ( x & 0x1 )
+        {
+            xA ^= A;
         }
-
-        y = (x[N - 1] & U) | x[0] & L;
-        a = (y & 0x1UL) ? A : 0x0UL;
-        x[N - 1] = x[M - 1] ^ (y >> 1) ^ a;
+        mt[i] = mt[(i + M) % N] ^ xA;
     }
 
-    y = x[next++];
+    index = 0;
+}
 
-    /* Improve distribution */
-    y ^= (y >> 11);
-    y ^= (y << 7) & 0x9d2c5680UL;
-    y ^= (y << 15) & 0xefc60000UL;
-    y ^= (y >> 18);
-
+// 产生一个32位随机数
+uint32_t ExtractU32()
+{
+    uint32_t  y;
+    int       i = index;
+    if ( index >= N )
+    {
+        Twist();
+        i = index;
+    }
+    y = mt[i];
+    index = i + 1;
+    y ^= (y >> U);
+    y ^= (y << S) & B;
+    y ^= (y << T) & C;
+    y ^= (y >> L);
     return y;
 }
 
 void main()
 {
     int i;
-    jsw_seed(1);
+    Initialize(1);
     for(i=0;i<10;i++)
     {
-        printf("%lu\n",jsw_rand());
+        printf("%lf\n",(double)ExtractU32()/4294967295);
     }
     
 }
