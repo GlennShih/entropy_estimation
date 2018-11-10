@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     char *output_name=argv[1];
     uint32_t seed = atol(argv[2]);
     uint32_t size = atol(argv[3]);
-    uint32_t mask;
     
     if(size==14) size=1;
     else if(size==15) size=2;
@@ -35,6 +34,7 @@ int main(int argc, char *argv[])
     for(i=0; i<16384*size; i++)
     {
         array = ran_produce();
+        //printf("%Lf\n", array);
         fprintf(file_out, "%Lf\n", array);
     }
     fclose(file_out);
@@ -42,27 +42,27 @@ int main(int argc, char *argv[])
 
 long double ran_produce()
 {
-    //int i1,i2;
     unsigned long long int i1, i2;
     long double u1, u2, w1, w2, ran, ran1, ran2;
 
     while(1)
     {
         i1=rand();
-        printf("i1=%llu\n",i1);
+        //printf("i1=%llu\n",i1);
         if(i1>0 && i1<RAND_MAX)
         {
-            u1=(unsigned long long int)i1/RAND_MAX;
+            u1=(long double)i1/RAND_MAX;
+            //printf("%Lf\n", u1);
             break;
         }
     }
     while(1)
     {
         i2=rand();
-        printf("i2=%llu\n",i2);
+        //printf("i2=%llu\n",i2);
         if(i2>0 && i2<RAND_MAX) 
         {
-            u2=(unsigned long long int)i2/RAND_MAX;
+            u2=(long double)i2/RAND_MAX;
             break;
         }
     }
