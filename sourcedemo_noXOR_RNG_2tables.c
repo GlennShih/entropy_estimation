@@ -163,6 +163,7 @@ int main(int argc, char **argv)
                     //printf("z[i]=%lf\n",z[i]);
                 }
                 printf("%lf\n", H_function(z,1,m));
+				//printf("RAND_MAX=%u\n",RAND_MAX);
 				for(i=0;i<K_VALUE;i++) z[i]=0.0;
 				break;
 			}

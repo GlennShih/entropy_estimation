@@ -114,7 +114,7 @@ int main(int argc, char **argv)
 				else if(size==19) tmp = rand()%524288;
 				else if(size==20) tmp = rand()%1048576;
 				//else if(size==K_VALUE) tmp &= 0x000fffff;
-				tmp2 = lookup_table[tmp];
+				tmp2 = (long double)lookup_table[tmp];
 				z[i]+=tmp2;
 			}
 			if(Y==m)
