@@ -1,5 +1,0 @@
-paper.c command
-
-./paper ../../trace/small.pcap 6948502
-./paper ../../trace/middle.pcap 16531395
-./paper ../../trace/big.pcap 17486529
